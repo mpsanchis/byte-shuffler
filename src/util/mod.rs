@@ -6,7 +6,7 @@ pub use logger::Verbosity;
 
 static LOGGER: OnceLock<Logger> = OnceLock::new();
 
-pub fn init_logger(verbosity: &Verbosity) {
+pub fn init_logger(verbosity: Verbosity) {
     LOGGER.set(Logger::from(verbosity)).expect("Logger already initialised")
 }
 

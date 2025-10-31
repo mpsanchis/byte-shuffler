@@ -11,8 +11,8 @@ pub struct Logger {
 }
 
 impl Logger {
-    pub fn from(verbosity: &Verbosity) -> Logger {
-        Logger { verbosity: verbosity.clone() }
+    pub fn from(verbosity: Verbosity) -> Logger {
+        Logger { verbosity }
     }
 
     pub fn log(&self, msg: &str) {
@@ -20,7 +20,7 @@ impl Logger {
             println!("{}", msg);
         }
     }
-    pub fn err(&self, msg: String) {
+    pub fn err(&self, msg: &str) {
         if matches!(self.verbosity, Verbosity::Off) {
             eprintln!("{}", msg);
         }
