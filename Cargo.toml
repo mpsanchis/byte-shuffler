@@ -1,8 +1,15 @@
 [package]
-name = "byte-shuffler"
+name = "byte_shuffler"
 version = "0.1.0"
 edition = "2024"
+
+[[bin]]
+name = "bs"
+path = "src/main.rs"
 
 [dependencies]
 clap = { version = "4.5.51", features = [ "derive"] }
 ctor = "0.6.1"
+
+[dev-dependencies]
+tempfile = "3.8.0"

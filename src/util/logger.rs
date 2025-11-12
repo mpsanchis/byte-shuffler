@@ -1,3 +1,5 @@
+use crate::util::signature::trim_signature;
+
 #[derive(clap::ValueEnum, Clone, Debug)]
 pub enum Verbosity {
     Off,   // never log
@@ -26,8 +28,9 @@ impl Logger {
         }
     }
 
-    pub fn log_bytes(&self, bytes: &Vec<u8>) {
+    pub fn log_bytes(&self, raw_bytes: &[u8]) {
         if matches!(self.verbosity, Verbosity::On) {
+            let bytes = trim_signature(raw_bytes);
             let n = bytes.len();
 
             // Keep a little array in the stack to avoid the heap (as an exercise)
@@ -36,7 +39,7 @@ impl Logger {
                 bytes_summary = [bytes[0], bytes[1], bytes[n - 2], bytes[n - 1]];
                 4
             } else {
-                bytes_summary[..n].copy_from_slice(&bytes);
+                bytes_summary[..n].copy_from_slice(bytes);
                 n
             };
             for (i, byte) in &mut bytes_summary[..count].iter().enumerate() {
@@ -50,9 +53,11 @@ impl Logger {
         }
     }
 
-    pub fn log_bytesn(&self, bytes: &Vec<u8>) {
+    pub fn log_bytesn(&self, bytes: &[u8]) {
         self.log_bytes(bytes);
-        print!("\n");
+        if matches!(self.verbosity, Verbosity::On) {
+            println!();
+        }
     }
 
     pub fn err(&self, msg: &str) {

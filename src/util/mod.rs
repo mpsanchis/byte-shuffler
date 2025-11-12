@@ -1,4 +1,6 @@
-mod logger;
+pub mod logger;
+pub mod prompt;
+pub mod signature;
 
 use logger::Logger;
 pub use logger::Verbosity;

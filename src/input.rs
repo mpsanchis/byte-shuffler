@@ -1,4 +1,5 @@
-use crate::util;
+use crate::util::logger::Verbosity;
+
 use clap::{Parser, ValueEnum};
 use std::env;
 use std::fmt::Display;
@@ -20,7 +21,7 @@ pub struct CypherCli {
     )]
     pub overwrite: bool,
     #[arg(short, long, value_enum, default_value = "on")]
-    pub verbosity: util::Verbosity,
+    pub verbosity: Verbosity,
 }
 
 #[derive(Clone, ValueEnum)]
